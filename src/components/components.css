@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'LogoFont';
+    src: local('LogoFont'), url(../assets/fonts/Bungasai.ttf) format('truetype');
+}
+.casCont svg {
+    width: 100px;
+    height: 100px;
+}
+.navatarCont svg {
+    width: 55px;
+    height: 55px;
+}
+#Circle rect {
+    fill: #c4cfd1 !important
+}
+.datePickerHijack input {
+    height: 40px !important;
+    padding: 0px 0px 0px 15px;
+    width: 100% !important;
+}
+.css-10o2lyd-MuiStack-root {
+    padding-top: 0px !important;
+}
+.css-10o2lyd-MuiStack-root>.MuiTextField-root, .css-10o2lyd-MuiStack-root>.MuiPickersTextField-root {
+    min-width: 100% !important;
+}
