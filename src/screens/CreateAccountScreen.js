@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -6,20 +6,26 @@ import Slide from "@mui/material/Slide";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
-import { setScreenState, setActiveUser, setTheme, setUserFriends, setShowAvatarEditor } from "../actions/actions";
+import {
+  setScreenState,
+  setActiveUser,
+  setTheme,
+  setUserFriends,
+  setShowAvatarEditor,
+} from "../actions/actions";
 import Alert from "@mui/material/Alert";
 import Fade from "@mui/material/Fade";
 import Avatar from "avataaars";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { generateRandomAvatarOptions } from "../components/randomizeAvatar";
-import { db } from '../firebaseConfig';
+import { db } from "../firebaseConfig";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import bcrypt from "bcryptjs";
-import Collapse from '@mui/material/Collapse';
-import BuildAvatar from '../components/BuildAvatar'
+import Collapse from "@mui/material/Collapse";
+import BuildAvatar from "../components/BuildAvatar";
 
 function CreateAccountScreen(props) {
   const screenState = useSelector((state) => state.screenState);
@@ -27,7 +33,9 @@ function CreateAccountScreen(props) {
   const darkMode = useSelector((state) => state.darkMode);
   const activeUser = useSelector((state) => state.activeUser);
   const showAvatarEditor = useSelector((state) => state.showAvatarEditor);
-  const initAvatarCustomizer = useSelector((state) => state.initAvatarCustomizer)
+  const initAvatarCustomizer = useSelector(
+    (state) => state.initAvatarCustomizer
+  );
   const dispatch = useDispatch();
   const [currentAvatarIndex, setCurrentAvatarIndex] = useState(0);
   const [successfulUpdate, setSuccessfulUpdate] = useState(false);
@@ -78,29 +86,32 @@ function CreateAccountScreen(props) {
   const handleNextAvatar = () => {
     if (currentAvatarIndex < previousAvatars.length - 1) {
       setCurrentAvatarIndex(currentAvatarIndex + 1);
-      setSuccessfulUpdate(false)
+      setSuccessfulUpdate(false);
     } else {
       const newAvatar = generateRandomAvatarOptions();
       setPreviousAvatars([...previousAvatars, newAvatar]);
       setCurrentAvatarIndex(currentAvatarIndex + 1);
-      setSuccessfulUpdate(false)
+      setSuccessfulUpdate(false);
     }
   };
 
   const handlePreviousAvatar = () => {
     if (currentAvatarIndex > 0) {
       setCurrentAvatarIndex(currentAvatarIndex - 1);
-      setSuccessfulUpdate(false)
+      setSuccessfulUpdate(false);
     }
   };
-  
+
   const handleToggleAvatar = () => {
     dispatch(setShowAvatarEditor(!showAvatarEditor));
-  }
+  };
 
   const searchUserByEmail = async (email) => {
     try {
-      const querySnapshot = await db.collection("Users").where("email", "==", email).get();
+      const querySnapshot = await db
+        .collection("Users")
+        .where("email", "==", email)
+        .get();
       return !querySnapshot.empty;
     } catch (error) {
       console.error("Error searching for user:", error);
@@ -121,11 +132,9 @@ function CreateAccountScreen(props) {
       errors.lastName = "Please enter your last name.";
     }
 
-    
     if (!email.trim() || !emailRegex.test(email)) {
       errors.email = "Please enter a valid email address.";
     }
-    
 
     if (props.environment !== "setting") {
       if (!password.trim()) {
@@ -138,7 +147,7 @@ function CreateAccountScreen(props) {
         errors.confirmPassword = "Passwords do not match.";
       }
     }
-    
+
     const emailExists = await searchUserByEmail(email);
     if (emailExists && props.environment !== "setting") {
       errors.email = "Email address already exists.";
@@ -172,7 +181,10 @@ function CreateAccountScreen(props) {
                   const updatedFields = {
                     firstName: firstName.toLowerCase(),
                     lastName: lastName.toLowerCase(),
-                    avatar: showAvatarEditor == false ? previousAvatars[currentAvatarIndex] : initAvatarCustomizer,
+                    avatar:
+                      showAvatarEditor == false
+                        ? previousAvatars[currentAvatarIndex]
+                        : initAvatarCustomizer,
                   };
                   if (emailModified) {
                     updatedFields.email = email;
@@ -182,18 +194,26 @@ function CreateAccountScreen(props) {
                     .update(updatedFields)
                     .then(() => {
                       setSuccessfulUpdate(true);
-                      dispatch(setActiveUser({
-                        firstName: firstName.toLowerCase(),
-                        lastName: lastName.toLowerCase(),
-                        email: emailModified ? email : activeUser.email,
-                        avatar: showAvatarEditor == false ? previousAvatars[currentAvatarIndex] : initAvatarCustomizer,
-                        docId: activeUser.docId,
-                        theme: theme,
-                        freids: activeUser.friends
-                      }));
+                      dispatch(
+                        setActiveUser({
+                          firstName: firstName.toLowerCase(),
+                          lastName: lastName.toLowerCase(),
+                          email: emailModified ? email : activeUser.email,
+                          avatar:
+                            showAvatarEditor == false
+                              ? previousAvatars[currentAvatarIndex]
+                              : initAvatarCustomizer,
+                          docId: activeUser.docId,
+                          theme: theme,
+                          freids: activeUser.friends,
+                        })
+                      );
                     })
                     .catch((error) => {
-                      console.error("Error updating user in Firestore: ", error);
+                      console.error(
+                        "Error updating user in Firestore: ",
+                        error
+                      );
                     });
                 } else {
                   bcrypt.hash(password, 10, (err, hash) => {
@@ -209,28 +229,30 @@ function CreateAccountScreen(props) {
                           password: hash,
                           theme: theme,
                           darkMode: darkMode,
-                          friends: [{
-                            "requestingUserId": "lVkLv65DuVWxLTFktt7R",
-                            "friendLastName": "bot",
-                            "status": "accepted",
-                            "friendDocId": "WpfMAzGK1QpQCqjoPqML",
-                            "friendFirstName": "quilist",
-                            "friendAvatar": {
-                                "hairColor": "Blonde",
-                                "topType": "NoHair",
-                                "eyebrowType": "DefaultNatural",
-                                "accessoriesType": "Wayfarers",
-                                "skinColor": "Pale",
-                                "eyeType": "Close",
-                                "facialHairType": "Blank",
-                                "clotheColor": "Black",
-                                "mouthType": "Serious",
-                                "clotheType": "CollarSweater",
-                                "graphicType": "Bat",
-                                "hatColor": "BrownDark",
-                                "facialHairColor": "Blank"
-                            }
-                        }]
+                          friends: [
+                            {
+                              requestingUserId: "lVkLv65DuVWxLTFktt7R",
+                              friendLastName: "bot",
+                              status: "accepted",
+                              friendDocId: "WpfMAzGK1QpQCqjoPqML",
+                              friendFirstName: "quilist",
+                              friendAvatar: {
+                                hairColor: "Blonde",
+                                topType: "NoHair",
+                                eyebrowType: "DefaultNatural",
+                                accessoriesType: "Wayfarers",
+                                skinColor: "Pale",
+                                eyeType: "Close",
+                                facialHairType: "Blank",
+                                clotheColor: "Black",
+                                mouthType: "Serious",
+                                clotheType: "CollarSweater",
+                                graphicType: "Bat",
+                                hatColor: "BrownDark",
+                                facialHairColor: "Blank",
+                              },
+                            },
+                          ],
                         })
                         .then((docRef) => {
                           const docId = docRef.id;
@@ -254,28 +276,32 @@ function CreateAccountScreen(props) {
                                     }
                                   }, 500);
                                 dispatch(setScreenState(null));
-                                dispatch(setUserFriends([{
-                                  "requestingUserId": "lVkLv65DuVWxLTFktt7R",
-                                  "friendLastName": "bot",
-                                  "status": "accepted",
-                                  "friendDocId": "WpfMAzGK1QpQCqjoPqML",
-                                  "friendFirstName": "quilist",
-                                  "friendAvatar": {
-                                      "hairColor": "Blonde",
-                                      "topType": "NoHair",
-                                      "eyebrowType": "DefaultNatural",
-                                      "accessoriesType": "Wayfarers",
-                                      "skinColor": "Pale",
-                                      "eyeType": "Close",
-                                      "facialHairType": "Blank",
-                                      "clotheColor": "Black",
-                                      "mouthType": "Serious",
-                                      "clotheType": "CollarSweater",
-                                      "graphicType": "Bat",
-                                      "hatColor": "BrownDark",
-                                      "facialHairColor": "Blank"
-                                  }
-                              }]));
+                                dispatch(
+                                  setUserFriends([
+                                    {
+                                      requestingUserId: "lVkLv65DuVWxLTFktt7R",
+                                      friendLastName: "bot",
+                                      status: "accepted",
+                                      friendDocId: "WpfMAzGK1QpQCqjoPqML",
+                                      friendFirstName: "quilist",
+                                      friendAvatar: {
+                                        hairColor: "Blonde",
+                                        topType: "NoHair",
+                                        eyebrowType: "DefaultNatural",
+                                        accessoriesType: "Wayfarers",
+                                        skinColor: "Pale",
+                                        eyeType: "Close",
+                                        facialHairType: "Blank",
+                                        clotheColor: "Black",
+                                        mouthType: "Serious",
+                                        clotheType: "CollarSweater",
+                                        graphicType: "Bat",
+                                        hatColor: "BrownDark",
+                                        facialHairColor: "Blank",
+                                      },
+                                    },
+                                  ])
+                                );
                                 dispatch(
                                   setActiveUser({
                                     firstName: firstName.toLowerCase(),
@@ -285,28 +311,31 @@ function CreateAccountScreen(props) {
                                     docId: docId,
                                     theme: theme,
                                     darkMode: darkMode,
-                                    friends: [{
-                                      "requestingUserId": "lVkLv65DuVWxLTFktt7R",
-                                      "friendLastName": "bot",
-                                      "status": "accepted",
-                                      "friendDocId": "WpfMAzGK1QpQCqjoPqML",
-                                      "friendFirstName": "quilist",
-                                      "friendAvatar": {
-                                          "hairColor": "Blonde",
-                                          "topType": "NoHair",
-                                          "eyebrowType": "DefaultNatural",
-                                          "accessoriesType": "Wayfarers",
-                                          "skinColor": "Pale",
-                                          "eyeType": "Close",
-                                          "facialHairType": "Blank",
-                                          "clotheColor": "Black",
-                                          "mouthType": "Serious",
-                                          "clotheType": "CollarSweater",
-                                          "graphicType": "Bat",
-                                          "hatColor": "BrownDark",
-                                          "facialHairColor": "Blank"
-                                      }
-                                  }]
+                                    friends: [
+                                      {
+                                        requestingUserId:
+                                          "lVkLv65DuVWxLTFktt7R",
+                                        friendLastName: "bot",
+                                        status: "accepted",
+                                        friendDocId: "WpfMAzGK1QpQCqjoPqML",
+                                        friendFirstName: "quilist",
+                                        friendAvatar: {
+                                          hairColor: "Blonde",
+                                          topType: "NoHair",
+                                          eyebrowType: "DefaultNatural",
+                                          accessoriesType: "Wayfarers",
+                                          skinColor: "Pale",
+                                          eyeType: "Close",
+                                          facialHairType: "Blank",
+                                          clotheColor: "Black",
+                                          mouthType: "Serious",
+                                          clotheType: "CollarSweater",
+                                          graphicType: "Bat",
+                                          hatColor: "BrownDark",
+                                          facialHairColor: "Blank",
+                                        },
+                                      },
+                                    ],
                                   })
                                 );
                                 setTimeout(() => {
@@ -389,7 +418,9 @@ function CreateAccountScreen(props) {
         <Slide
           direction={props.environment == "setting" ? "up" : "right"}
           in={screenState === "CreateAccount" || props.environment == "setting"}
-          container={props.environment == "setting" ? containerRef.current : null}
+          container={
+            props.environment == "setting" ? containerRef.current : null
+          }
           mountOnEnter
           unmountOnExit
         >
@@ -401,7 +432,10 @@ function CreateAccountScreen(props) {
               width: props.environment == "setting" ? "100%" : null,
               padding: props.environment == "setting" ? "0px" : null,
               boxShadow: props.environment == "setting" ? "unset" : null,
-              backgroundColor: darkMode && props.environment == "setting" ? theme.dark : theme.lighter,
+              backgroundColor:
+                darkMode && props.environment == "setting"
+                  ? theme.dark
+                  : theme.lighter,
             }}
           >
             <div
@@ -410,7 +444,7 @@ function CreateAccountScreen(props) {
                 justifyContent: "center",
                 alignItems: "center",
                 flexDirection: "row",
-                position: 'relative',
+                position: "relative",
               }}
             >
               {showAvatarEditor == false && (
@@ -432,14 +466,11 @@ function CreateAccountScreen(props) {
                     {...previousAvatars[currentAvatarIndex]}
                   />
                 ) : (
-                  <Avatar
-                    avatarStyle='Circle'
-                    {...initAvatarCustomizer}
-                  />
+                  <Avatar avatarStyle="Circle" {...initAvatarCustomizer} />
                 )}
               </div>
               {showAvatarEditor == false && (
-                  <ArrowCircleRightIcon
+                <ArrowCircleRightIcon
                   sx={{
                     color: theme.primary,
                     width: "40px",
@@ -449,10 +480,10 @@ function CreateAccountScreen(props) {
                 />
               )}
               {props.environment == "setting" && (
-                <div style={{position: 'absolute', bottom: 0, right: 0,}}>
+                <div style={{ position: "absolute", bottom: 0, right: 0 }}>
                   {showAvatarEditor == false ? (
                     <Button variant="text" onClick={handleToggleAvatar}>
-                      Customize {props.mobile ? null : 'Avatar'}
+                      Customize {props.mobile ? null : "Avatar"}
                     </Button>
                   ) : (
                     <Button variant="text" onClick={handleToggleAvatar}>
@@ -464,15 +495,20 @@ function CreateAccountScreen(props) {
             </div>
             <Box>
               <Collapse in={showAvatarEditor}>
-                  <BuildAvatar />
+                <BuildAvatar />
               </Collapse>
               <Collapse in={!showAvatarEditor}>
-                <div style={{display: 'flex', flexDirection:'column'}}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
                   <TextField
                     label="First Name"
                     color={darkMode && "secondary"}
                     focused={props.environment == "setting" && darkMode && true}
-                    style={{ display: props.environment == "setting" && showAvatarEditor == true && "none" }}
+                    style={{
+                      display:
+                        props.environment == "setting" &&
+                        showAvatarEditor == true &&
+                        "none",
+                    }}
                     variant="outlined"
                     margin="normal"
                     size="small"
@@ -485,7 +521,12 @@ function CreateAccountScreen(props) {
                     label="Last Name"
                     color={darkMode && "secondary"}
                     focused={props.environment == "setting" && darkMode && true}
-                    style={{ display: props.environment == "setting" && showAvatarEditor == true && "none" }}
+                    style={{
+                      display:
+                        props.environment == "setting" &&
+                        showAvatarEditor == true &&
+                        "none",
+                    }}
                     variant="outlined"
                     margin="normal"
                     size="small"
@@ -498,7 +539,12 @@ function CreateAccountScreen(props) {
                     label="Email"
                     color={darkMode && "secondary"}
                     focused={props.environment == "setting" && darkMode && true}
-                    style={{ display: props.environment == "setting" && showAvatarEditor == true && "none" }}
+                    style={{
+                      display:
+                        props.environment == "setting" &&
+                        showAvatarEditor == true &&
+                        "none",
+                    }}
                     variant="outlined"
                     margin="normal"
                     size="small"

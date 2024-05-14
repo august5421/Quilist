@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormControl, InputLabel, Select, option } from "@mui/material";
 
 const BuildAvatar = () => {
-  const darkMode = useSelector(state => state.darkMode); 
-  const theme = useSelector(state => state.theme);
+  const darkMode = useSelector((state) => state.darkMode);
+  const theme = useSelector((state) => state.theme);
   const initAvatarCustomizer = useSelector(
     (state) => state.initAvatarCustomizer
   );
@@ -20,13 +20,36 @@ const BuildAvatar = () => {
       })
     );
   };
-  
+
   return (
     <div>
-      <div style={{ display: "flex", flexDirection: "row", marginBottom:'10px' }}>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1, marginRight: '10px'}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="topType">Head Covering</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787'}} id="topType" onChange={handleSelectChange}>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "10px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            marginRight: "10px",
+          }}
+        >
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="topType"
+          >
+            Head Covering
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="topType"
+            onChange={handleSelectChange}
+          >
             <option value="NoHair">NoHair</option>
             <option value="Eyepatch">Eyepatch</option>
             <option value="Hat">Hat</option>
@@ -56,9 +79,7 @@ const BuildAvatar = () => {
             <option value="ShortHairDreads01">ShortHairDreads01</option>
             <option value="ShortHairDreads02">ShortHairDreads02</option>
             <option value="ShortHairFrizzle">ShortHairFrizzle</option>
-            <option value="ShortHairShaggyMullet">
-              ShortHairShaggyMullet
-            </option>
+            <option value="ShortHairShaggyMullet">ShortHairShaggyMullet</option>
             <option value="ShortHairShortCurly">ShortHairShortCurly</option>
             <option value="ShortHairShortFlat">ShortHairShortFlat</option>
             <option value="ShortHairShortRound">ShortHairShortRound</option>
@@ -70,9 +91,23 @@ const BuildAvatar = () => {
             </option>
           </select>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="accessoriesType">Glasses</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="accessoriesType" onChange={handleSelectChange}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="accessoriesType"
+          >
+            Glasses
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="accessoriesType"
+            onChange={handleSelectChange}
+          >
             <option value="Blank">Blank</option>
             <option value="Kurt">Kurt</option>
             <option value="Prescription01">Prescription01</option>
@@ -84,10 +119,33 @@ const BuildAvatar = () => {
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "row", marginBottom:'10px' }}>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1, marginRight: '10px'}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="hairColor">Hair Color</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="hairColor" onChange={handleSelectChange}>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "10px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            marginRight: "10px",
+          }}
+        >
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="hairColor"
+          >
+            Hair Color
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="hairColor"
+            onChange={handleSelectChange}
+          >
             <option value="Auburn">Auburn</option>
             <option value="Black">Black</option>
             <option value="Blonde">Blonde</option>
@@ -101,9 +159,23 @@ const BuildAvatar = () => {
             <option value="SilverGray">SilverGray</option>
           </select>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="facialHairType">Facial Hair</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="facialHairType" onChange={handleSelectChange}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="facialHairType"
+          >
+            Facial Hair
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="facialHairType"
+            onChange={handleSelectChange}
+          >
             <option value="Blank">Blank</option>
             <option value="BeardMedium">BeardMedium</option>
             <option value="BeardLight">BeardLight</option>
@@ -113,10 +185,33 @@ const BuildAvatar = () => {
           </select>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", marginBottom:'10px' }}>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1, marginRight: '10px'}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="clotheType">Clothes</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="clotheType" onChange={handleSelectChange}>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "10px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            marginRight: "10px",
+          }}
+        >
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="clotheType"
+          >
+            Clothes
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="clotheType"
+            onChange={handleSelectChange}
+          >
             <option value="BlazerShirt">BlazerShirt</option>
             <option value="BlazerSweater">BlazerSweater</option>
             <option value="CollarSweater">CollarSweater</option>
@@ -128,9 +223,23 @@ const BuildAvatar = () => {
             <option value="ShirtVNeck">ShirtVNeck</option>
           </select>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="eyeType">Eyes</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="eyeType" onChange={handleSelectChange}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="eyeType"
+          >
+            Eyes
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="eyeType"
+            onChange={handleSelectChange}
+          >
             <option value="Close">Close</option>
             <option value="Cry">Cry</option>
             <option value="Default">Default</option>
@@ -146,19 +255,40 @@ const BuildAvatar = () => {
           </select>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", marginBottom:'10px' }}>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1, marginRight: '10px'}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="eyebrowType">Expression</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="eyebrowType" onChange={handleSelectChange}>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "10px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            flex: 1,
+            marginRight: "10px",
+          }}
+        >
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="eyebrowType"
+          >
+            Expression
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="eyebrowType"
+            onChange={handleSelectChange}
+          >
             <option value="Angry">Angry</option>
             <option value="AngryNatural">AngryNatural</option>
             <option value="Default">Default</option>
             <option value="DefaultNatural">DefaultNatural</option>
             <option value="FlatNatural">FlatNatural</option>
             <option value="RaisedExcited">RaisedExcited</option>
-            <option value="RaisedExcitedNatural">
-              RaisedExcitedNatural
-            </option>
+            <option value="RaisedExcitedNatural">RaisedExcitedNatural</option>
             <option value="SadConcerned">SadConcerned</option>
             <option value="SadConcernedNatural">SadConcernedNatural</option>
             <option value="UnibrowNatural">UnibrowNatural</option>
@@ -166,9 +296,23 @@ const BuildAvatar = () => {
             <option value="UpDownNatural">UpDownNatural</option>
           </select>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1}}>
-          <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="mouthType">Mouth</InputLabel>
-          <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="mouthType" onChange={handleSelectChange}>
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="mouthType"
+          >
+            Mouth
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="mouthType"
+            onChange={handleSelectChange}
+          >
             <option value="Concerned">Concerned</option>
             <option value="Default">Default</option>
             <option value="Disbelief">Disbelief</option>
@@ -184,18 +328,34 @@ const BuildAvatar = () => {
           </select>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", marginBottom:'10px' }}>
-        <div style={{ display: "flex", flexDirection: "column", flex: 1}}>
-        <InputLabel style={{color: darkMode ? theme.light : theme.primary}} htmlFor="skinColor">Skin Color</InputLabel>
-        <select style={{borderRadius: 5, border: '1px solid #ccc', padding: '8px 12px', color: '#878787' }} id="skinColor" onChange={handleSelectChange}>
-          <option value="Tanned">Tanned</option>
-          <option value="Yellow">Yellow</option>
-          <option value="Pale">Pale</option>
-          <option value="Light">Light</option>
-          <option value="Brown">Brown</option>
-          <option value="DarkBrown">DarkBrown</option>
-          <option value="Black">Black</option>
-        </select>
+      <div
+        style={{ display: "flex", flexDirection: "row", marginBottom: "10px" }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+          <InputLabel
+            style={{ color: darkMode ? theme.light : theme.primary }}
+            htmlFor="skinColor"
+          >
+            Skin Color
+          </InputLabel>
+          <select
+            style={{
+              borderRadius: 5,
+              border: "1px solid #ccc",
+              padding: "8px 12px",
+              color: "#878787",
+            }}
+            id="skinColor"
+            onChange={handleSelectChange}
+          >
+            <option value="Tanned">Tanned</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Pale">Pale</option>
+            <option value="Light">Light</option>
+            <option value="Brown">Brown</option>
+            <option value="DarkBrown">DarkBrown</option>
+            <option value="Black">Black</option>
+          </select>
         </div>
       </div>
     </div>

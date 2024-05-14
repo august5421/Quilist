@@ -3,10 +3,6 @@ import "./components.css";
 
 const LogoFont = (props) => {
 
-  const logoStyle = {
-    
-  };
-
   return (
     <div
       style={{

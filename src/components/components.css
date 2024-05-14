@@ -24,3 +24,7 @@
 .css-10o2lyd-MuiStack-root>.MuiTextField-root, .css-10o2lyd-MuiStack-root>.MuiPickersTextField-root {
     min-width: 100% !important;
 }
+.MuiButtonBase-root #incroButton {
+    min-width: 40px !important;
+    width: calc(100% - 11px) !important;
+}

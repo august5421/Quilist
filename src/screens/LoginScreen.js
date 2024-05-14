@@ -1,45 +1,51 @@
-import React, { useState } from 'react';
-import Cookies from 'js-cookie';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Slide from '@mui/material/Slide';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import { setActiveUser, setScreenState, setTheme, setDarkMode, setUserFriends } from '../actions/actions';
-import Alert from '@mui/material/Alert';
-import Fade from '@mui/material/Fade';
-import { db } from '../firebaseConfig';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import bcrypt from 'bcryptjs';
+import React, { useState } from "react";
+import Cookies from "js-cookie";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Slide from "@mui/material/Slide";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import {
+  setActiveUser,
+  setScreenState,
+  setTheme,
+  setDarkMode,
+  setUserFriends,
+} from "../actions/actions";
+import Alert from "@mui/material/Alert";
+import Fade from "@mui/material/Fade";
+import { db } from "../firebaseConfig";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import bcrypt from "bcryptjs";
 
 function LoginScreen(props) {
-  const screenState = useSelector(state => state.screenState);
-  const theme = useSelector(state => state.theme);
+  const screenState = useSelector((state) => state.screenState);
+  const theme = useSelector((state) => state.theme);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     errors: {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+    },
   });
 
   const handleCreateAccountClick = () => {
     dispatch(setScreenState(null));
     setTimeout(() => {
-      dispatch(setScreenState('CreateAccount'));
+      dispatch(setScreenState("CreateAccount"));
       setFormData({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         errors: {
-          email: '',
-          password: ''
-        }
-      })
+          email: "",
+          password: "",
+        },
+      });
     }, 500);
   };
 
@@ -48,29 +54,29 @@ function LoginScreen(props) {
     const errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim() || !emailRegex.test(email)) {
-      errors.email = 'Please enter a valid email address.';
+      errors.email = "Please enter a valid email address.";
     }
     if (!password.trim()) {
-      errors.password = 'Please enter your password.';
+      errors.password = "Please enter your password.";
     }
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      errors
+      errors,
     }));
     if (Object.keys(errors).length === 0) {
-      db.collection('Users')
-        .where('email', '==', email)
+      db.collection("Users")
+        .where("email", "==", email)
         .get()
-        .then(querySnapshot => {
+        .then((querySnapshot) => {
           if (querySnapshot.empty) {
-            setFormData(prevState => ({
+            setFormData((prevState) => ({
               ...prevState,
               errors: {
-                email: 'Incorrect email or password.'
-              }
+                email: "Incorrect email or password.",
+              },
             }));
           } else {
-            querySnapshot.forEach(doc => {
+            querySnapshot.forEach((doc) => {
               const userData = doc.data();
               bcrypt.compare(password, userData.password, (err, result) => {
                 if (err) {
@@ -78,76 +84,86 @@ function LoginScreen(props) {
                   return;
                 }
                 if (result) {
-                  Cookies.set('user', JSON.stringify(userData));
-                  dispatch(setActiveUser({
-                    firstName: userData.firstName,
-                    lastName: userData.lastName,
-                    email: userData.email,
-                    avatar: userData.avatar,
-                    docId: userData.docId,
-                    theme: userData.theme,
-                    friends: userData.friends
-                  }));
-                  dispatch(setTheme(userData.theme))
+                  Cookies.set("user", JSON.stringify(userData));
+                  dispatch(
+                    setActiveUser({
+                      firstName: userData.firstName,
+                      lastName: userData.lastName,
+                      email: userData.email,
+                      avatar: userData.avatar,
+                      docId: userData.docId,
+                      theme: userData.theme,
+                      friends: userData.friends,
+                    })
+                  );
+                  dispatch(setTheme(userData.theme));
                   dispatch(setDarkMode(userData.darkMode));
                   dispatch(setUserFriends(userData.friends));
                   dispatch(setScreenState(null));
                   setTimeout(() => {
-                    dispatch(setScreenState('Dashboard'));
+                    dispatch(setScreenState("Dashboard"));
                     setFormData({
-                      email: '',
-                      password: '',
+                      email: "",
+                      password: "",
                       errors: {
-                        email: '',
-                        password: ''
-                      }
-                    })
-                  }, 500)
+                        email: "",
+                        password: "",
+                      },
+                    });
+                  }, 500);
                 } else {
-                  setFormData(prevState => ({
+                  setFormData((prevState) => ({
                     ...prevState,
                     errors: {
-                      password: 'Incorrect password.'
-                    }
+                      password: "Incorrect password.",
+                    },
                   }));
                 }
               });
             });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error searching for user: ", error);
         });
-    }    
+    }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value,
       errors: {
         ...prevState.errors,
-        [name]: ''
-      }
+        [name]: "",
+      },
     }));
   };
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        '& > :not(style)': {
-          width: props.mobile ? '75vw' : '550px',
-          padding: '25px',
-          maxWidth: 'calc(100% - 50px)',
+        display: "flex",
+        flexWrap: "wrap",
+        flexDirection: "column",
+        "& > :not(style)": {
+          width: props.mobile ? "75vw" : "550px",
+          padding: "25px",
+          maxWidth: "calc(100% - 50px)",
         },
       }}
     >
-      <Slide direction="left" in={screenState === 'LogIn'} mountOnEnter unmountOnExit>
-        <Paper elevation={6} style={{ display: 'flex', flexDirection: 'column' }}>
+      <Slide
+        direction="left"
+        in={screenState === "LogIn"}
+        mountOnEnter
+        unmountOnExit
+      >
+        <Paper
+          elevation={6}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <TextField
             label="Email"
             variant="outlined"
@@ -160,7 +176,7 @@ function LoginScreen(props) {
           />
           <TextField
             label="Password"
-            type={formData.showPassword ? 'text' : 'password'}
+            type={formData.showPassword ? "text" : "password"}
             variant="outlined"
             margin="normal"
             size="small"
@@ -184,21 +200,26 @@ function LoginScreen(props) {
               ),
             }}
           />
-          
-            {!!formData.errors.email || !!formData.errors.password ? (
-                <Fade in={!!formData.errors.email || !!formData.errors.password}>
-                    <Alert style={{marginTop: '10px'}} severity="error">{formData.errors.email !== undefined && formData.errors.email + ' '}{formData.errors.password !== undefined && formData.errors.password}</Alert>
-                </Fade>
-            ) : null}
-          
+
+          {!!formData.errors.email || !!formData.errors.password ? (
+            <Fade in={!!formData.errors.email || !!formData.errors.password}>
+              <Alert style={{ marginTop: "10px" }} severity="error">
+                {formData.errors.email !== undefined &&
+                  formData.errors.email + " "}
+                {formData.errors.password !== undefined &&
+                  formData.errors.password}
+              </Alert>
+            </Fade>
+          ) : null}
+
           <Button
             variant="contained"
-            style={{ backgroundColor: theme.primary, margin: '15px 0px' }}
+            style={{ backgroundColor: theme.primary, margin: "15px 0px" }}
             onClick={handleLogin}
           >
             Log In
           </Button>
-          <div style={{ color: theme.primary, textAlign: 'center' }}>
+          <div style={{ color: theme.primary, textAlign: "center" }}>
             <Button variant="text" onClick={handleCreateAccountClick}>
               Create An Account
             </Button>

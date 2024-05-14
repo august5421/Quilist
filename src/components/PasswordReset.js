@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { TextField, Button, Typography, IconButton, InputAdornment } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setChangePassword } from "../actions/actions";
 import Alert from "@mui/material/Alert";
 import Fade from "@mui/material/Fade";
-import { db } from '../firebaseConfig';
+import { db } from "../firebaseConfig";
 import bcrypt from "bcryptjs";
 
 const PasswordReset = (props) => {
@@ -27,47 +33,59 @@ const PasswordReset = (props) => {
   };
 
   const handleReset = async () => {
-    const userRef = db.collection('Users').doc(activeUser.docId);
+    const userRef = db.collection("Users").doc(activeUser.docId);
     const userDoc = await userRef.get();
     if (userDoc.exists) {
       const userData = userDoc.data();
-      const isPasswordCorrect = await bcrypt.compare(changePassword.currentPassword, userData.password);
+      const isPasswordCorrect = await bcrypt.compare(
+        changePassword.currentPassword,
+        userData.password
+      );
       if (isPasswordCorrect) {
         if (changePassword.newPassword == changePassword.confirmPassword) {
-            const hashedNewPassword = await bcrypt.hash(changePassword.newPassword, 10);
-            await userRef.update({
-            password: hashedNewPassword
-            });
-            setShowCurrentPassword(false)
-            setShowNewPassword(false)
-            dispatch(setChangePassword('success', 'Password reset successfully.'));
-            dispatch(setChangePassword('currentPassword', ''));
-            dispatch(setChangePassword('newPassword', ''));
-            dispatch(setChangePassword('confirmPassword', ''));
+          const hashedNewPassword = await bcrypt.hash(
+            changePassword.newPassword,
+            10
+          );
+          await userRef.update({
+            password: hashedNewPassword,
+          });
+          setShowCurrentPassword(false);
+          setShowNewPassword(false);
+          dispatch(
+            setChangePassword("success", "Password reset successfully.")
+          );
+          dispatch(setChangePassword("currentPassword", ""));
+          dispatch(setChangePassword("newPassword", ""));
+          dispatch(setChangePassword("confirmPassword", ""));
         } else {
-          dispatch(setChangePassword('error', 'Passwords do not match.'));
+          dispatch(setChangePassword("error", "Passwords do not match."));
         }
       } else {
-        dispatch(setChangePassword('error', 'Incorrect current password. Please try again.'));
+        dispatch(
+          setChangePassword(
+            "error",
+            "Incorrect current password. Please try again."
+          )
+        );
       }
     } else {
-      dispatch(setChangePassword('error', 'User not found. Please try again.'));
+      dispatch(setChangePassword("error", "User not found. Please try again."));
     }
   };
 
   return (
     <div>
-      
       <TextField
         label="Current Password"
         color="secondary"
         focused={darkMode && true}
         type={showCurrentPassword ? "text" : "password"}
-        id={darkMode ? 'filled-basic' :  'outlined-basic'}
+        id={darkMode ? "filled-basic" : "outlined-basic"}
         value={changePassword.currentPassword}
-        size='small'
+        size="small"
         onChange={(e) => {
-            dispatch(setChangePassword('currentPassword', e.target.value));
+          dispatch(setChangePassword("currentPassword", e.target.value));
         }}
         fullWidth
         margin="normal"
@@ -89,11 +107,11 @@ const PasswordReset = (props) => {
         color="secondary"
         focused={darkMode && true}
         type={showNewPassword ? "text" : "password"}
-        id={darkMode ? 'filled-basic' :  'outlined-basic'}
+        id={darkMode ? "filled-basic" : "outlined-basic"}
         value={changePassword.newPassword}
-        size='small'
+        size="small"
         onChange={(e) => {
-            dispatch(setChangePassword('newPassword', e.target.value));
+          dispatch(setChangePassword("newPassword", e.target.value));
         }}
         fullWidth
         margin="normal"
@@ -115,11 +133,11 @@ const PasswordReset = (props) => {
         color="secondary"
         focused={darkMode && true}
         type={showNewPassword ? "text" : "password"}
-        id={darkMode ? 'filled-basic' :  'outlined-basic'}
+        id={darkMode ? "filled-basic" : "outlined-basic"}
         value={changePassword.confirmPassword}
-        size='small'
+        size="small"
         onChange={(e) => {
-            dispatch(setChangePassword('confirmPassword', e.target.value));
+          dispatch(setChangePassword("confirmPassword", e.target.value));
         }}
         fullWidth
         margin="normal"
@@ -141,9 +159,9 @@ const PasswordReset = (props) => {
       <Button
         variant="contained"
         style={{
-            backgroundColor: theme.primary,
-            margin: "15px 0px",
-            width: '100%',
+          backgroundColor: theme.primary,
+          margin: "15px 0px",
+          width: "100%",
         }}
         onClick={handleReset}
       >
