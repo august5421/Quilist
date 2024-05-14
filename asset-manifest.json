@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Quilist/static/css/main.26210cff.css",
-    "main.js": "/Quilist/static/js/main.ef49e734.js",
+    "main.css": "/Quilist/static/css/main.7c7d304f.css",
+    "main.js": "/Quilist/static/js/main.e17ee0fe.js",
     "static/media/Bungasai.ttf": "/Quilist/static/media/Bungasai.056fc6517e902e9e3562.ttf",
     "index.html": "/Quilist/index.html",
-    "main.26210cff.css.map": "/Quilist/static/css/main.26210cff.css.map",
-    "main.ef49e734.js.map": "/Quilist/static/js/main.ef49e734.js.map"
+    "main.7c7d304f.css.map": "/Quilist/static/css/main.7c7d304f.css.map",
+    "main.e17ee0fe.js.map": "/Quilist/static/js/main.e17ee0fe.js.map"
   },
   "entrypoints": [
-    "static/css/main.26210cff.css",
-    "static/js/main.ef49e734.js"
+    "static/css/main.7c7d304f.css",
+    "static/js/main.e17ee0fe.js"
   ]
 }
