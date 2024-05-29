@@ -29,7 +29,7 @@ const MyFriends = (props) => {
   const searchResults = useSelector((state) => state.searchResults);
   const activeUser = useSelector((state) => state.activeUser);
   const userFriends = useSelector((state) => state.userFriends);
-
+  const screenState = useSelector((state) => state.screenState);
   const handleConfirmFriend = async (x, y) => {
     try {
       const userXDoc = await db.collection("Users").doc(x).get();
@@ -260,7 +260,11 @@ const MyFriends = (props) => {
             height: "90%",
           }}
         >
-          You do not have any friends yet
+          {screenState === "init-Dashboard" ? (
+            <>Login to an account to search for and save friends</>
+          ) : (
+            <>You do not have any friends yet</>
+          )}
         </div>
       )}
     </>

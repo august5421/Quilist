@@ -28,7 +28,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ListSubheader from "@mui/material/ListSubheader";
-import { BorderClear, BorderColor } from "@mui/icons-material";
+import { BorderClear, BorderColor, WifiProtectedSetupRounded } from "@mui/icons-material";
 
 const AutoIncrementor = (props) => {
   const dispatch = useDispatch();
@@ -94,242 +94,567 @@ const AutoIncrementor = (props) => {
             key={`top-${index}`}
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: props.veryMobile ? "column" : "row",
               width: "100%",
-              justifyContent: "space-between",
+              justifyContent: props.veryMobile ? "flex-start" : "space-between",
               marginBottom:
                 index !== initListInfo.listItems.length - 1 ? "10px" : "0",
               marginTop: index !== 0 && "15px",
             }}
           >
-            {initListInfo.listQuantity && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex:
-                    index !== initListInfo.listItems.length - 1
-                      ? 1
-                      : props.mobile
-                      ? 1.5
-                      : 1,
-                  margin: "0px 10px 0px 0px",
-                }}
-              >
-                <TextField
-                  focused={darkMode && true}
-                  id={darkMode ? "filled-basic" : "outlined-basic"}
-                  color="secondary"
-                  label="#"
-                  size="small"
-                  InputProps={{
-                    inputProps: { inputMode: "numeric", pattern: "[0-9]*" },
-                  }}
-                  value={object.quantity}
-                  onChange={(e) =>
-                    handleListItemChange(index, "quantity", e.target.value)
-                  }
-                  sx={{
-                    marginTop: index == 0 ? "16px" : null,
-                  }}
-                />
-              </div>
-            )}
-            {initListInfo.listUnits && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  flex:
-                    index !== initListInfo.listItems.length - 1
-                      ? 2
-                      : props.mobile
-                      ? 2.5
-                      : 2,
-                  margin: "0px 10px 0px 0px",
-                }}
-              >
-                <FormControl
-                  size="small"
-                  sx={{
-                    marginTop: index == 0 ? "16px" : null,
-                  }}
-                >
-                  <InputLabel id="unitId">Unit</InputLabel>
-                  <Select
-                    labelId="unitId"
-                    id="unitId"
-                    label="Age"
-                    value={object.units}
-                    onChange={(e) =>
-                      handleListItemChange(index, "units", e.target.value)
-                    }
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <ListSubheader>Weight</ListSubheader>
-                    <MenuItem value={object.quantity > 1 ? "Ounces" : "Ounce"}>
-                      {object.quantity > 1 ? "Ounces" : "Ounce"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Pounds" : "Pound"}>
-                      {object.quantity > 1 ? "Pounds" : "Pound"}
-                    </MenuItem>
-                    <ListSubheader>Volume</ListSubheader>
-                    <MenuItem value={"Fl Oz"}>Fl Oz</MenuItem>
-                    <MenuItem
-                      value={object.quantity > 1 ? "Teaspoons" : "Teaspoon"}
-                    >
-                      {object.quantity > 1 ? "Teaspoons" : "Teaspoon"}
-                    </MenuItem>
-                    <MenuItem
-                      value={object.quantity > 1 ? "Tablespoons" : "Tablespoon"}
-                    >
-                      {object.quantity > 1 ? "Tablespoons" : "Tablespoon"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Pints" : "Pint"}>
-                      {object.quantity > 1 ? "Pints" : "Pint"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Quarts" : "Quart"}>
-                      {object.quantity > 1 ? "Quarts" : "Quart"}
-                    </MenuItem>
-                    <MenuItem
-                      value={object.quantity > 1 ? "Gallons" : "Gallon"}
-                    >
-                      {object.quantity > 1 ? "Gallons" : "Gallon"}
-                    </MenuItem>
-                    <ListSubheader>Distance</ListSubheader>
-                    <MenuItem value={object.quantity > 1 ? "Inchs" : "Inch"}>
-                      {object.quantity > 1 ? "Inchs" : "Inch"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Feets" : "Feet"}>
-                      {object.quantity > 1 ? "Feets" : "Feet"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Yards" : "Yard"}>
-                      {object.quantity > 1 ? "Yards" : "Yard"}
-                    </MenuItem>
-                    <ListSubheader>In a store</ListSubheader>
-                    <MenuItem value={object.quantity > 1 ? "Bags" : "Bag"}>
-                      {object.quantity > 1 ? "Bags" : "Bag"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Cans" : "Can"}>
-                      {object.quantity > 1 ? "Cans" : "Can"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Jars" : "Jar"}>
-                      {object.quantity > 1 ? "Jars" : "Jar"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Loaves" : "Loaf"}>
-                      {object.quantity > 1 ? "Loaves" : "Loaf"}
-                    </MenuItem>
-                    <MenuItem
-                      value={object.quantity > 1 ? "Bottles" : "Bottle"}
-                    >
-                      {object.quantity > 1 ? "Bottles" : "Bottle"}
-                    </MenuItem>
-                    <MenuItem
-                      value={object.quantity > 1 ? "Cartons" : "Carton"}
-                    >
-                      {object.quantity > 1 ? "Cartons" : "Carton"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Boxes" : "Box"}>
-                      {object.quantity > 1 ? "Boxes" : "Box"}
-                    </MenuItem>
-                    <MenuItem
-                      value={object.quantity > 1 ? "Bundles" : "Bundle"}
-                    >
-                      {object.quantity > 1 ? "Bundles" : "Bundle"}
-                    </MenuItem>
-                    <MenuItem value={object.quantity > 1 ? "Bars" : "Bar"}>
-                      {object.quantity > 1 ? "Bars" : "Bar"}
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            )}
-            <div style={{ display: "flex", flexDirection: "column", flex: 5 }}>
-              <TextField
-                focused={darkMode && true}
-                id={darkMode ? "filled-basic" : "outlined-basic"}
-                color="secondary"
-                label={`Item #` + (index + 1)}
-                size="small"
-                value={object.value}
-                onChange={(e) =>
-                  handleListItemChange(index, "value", e.target.value)
-                }
-                error={
-                  listSaveError == "All items in the list must have a value"
-                }
-                sx={{
-                  width: "100%",
-                  marginTop: index == 0 ? "16px" : null,
-                }}
-              />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-                margin: index === 0 ? "15px 0px 0px 0px" : "0px",
-              }}
-            >
-              {index === initListInfo.listItems.length - 1 ? (
+            {props.veryMobile ? (
+              <>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    height: "40px",
+                    width: "100%",
                   }}
                 >
-                  <Button
-                    id="incroButton"
-                    onClick={() => handleRemoveTextField(index)}
-                    variant="contained"
-                    color="secondary"
+                  <div style={{ flex: 5 }}>
+                    <TextField
+                      focused={darkMode && true}
+                      id={darkMode ? "filled-basic" : "outlined-basic"}
+                      color="secondary"
+                      label={`Item #` + (index + 1)}
+                      size="small"
+                      value={object.value}
+                      onChange={(e) =>
+                        handleListItemChange(index, "value", e.target.value)
+                      }
+                      error={
+                        listSaveError ==
+                        "All items in the list must have a value"
+                      }
+                      sx={{
+                        width: "100%",
+                        marginTop: index == 0 ? "16px" : null,
+                      }}
+                    />
+                  </div>
+                  <div
                     style={{
-                      padding: props.mobile ? "5px" : null,
-                      height: "100%",
-                      margin: "0px 0px 0px 10px",
-                      maxHeight: index == 0 ? "40px" : null,
-                      display: index == 0 && "none",
+                      flex: 1,
+                      margin: index === 0 ? "15px 0px 0px 0px" : "0px",
                     }}
                   >
-                    -
-                  </Button>
-                  <Button
-                    id="incroButton"
-                    onClick={handleAddTextField}
-                    variant="contained"
-                    color="primary"
-                    style={{
-                      padding: props.mobile ? "5px" : null,
-                      height: "100%",
-                      margin: "0px 0px 0px 10px",
-                      maxHeight: index == 0 ? "40px" : null,
-                      width: index == 0 ? "100%" : null
-                    }}
-                  >
-                    +
-                  </Button>
+                    {index === initListInfo.listItems.length - 1 ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          height: "40px",
+                        }}
+                      >
+                        <Button
+                          id="incroButton"
+                          onClick={() => handleRemoveTextField(index)}
+                          variant="contained"
+                          color="secondary"
+                          style={{
+                            padding: props.mobile ? "5px" : null,
+                            height: "100%",
+                            margin: "0px 0px 0px 10px",
+                            maxHeight: index == 0 ? "40px" : null,
+                            display: index == 0 && "none",
+                          }}
+                        >
+                          -
+                        </Button>
+                        <Button
+                          id="incroButton"
+                          onClick={handleAddTextField}
+                          variant="contained"
+                          color="primary"
+                          style={{
+                            padding: props.mobile ? "5px" : null,
+                            height: "100%",
+                            margin: "0px 0px 0px 10px",
+                            maxHeight: index == 0 ? "40px" : null,
+                            width: index == 0 ? "100%" : null,
+                          }}
+                        >
+                          +
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        id="incroButton"
+                        onClick={() => handleRemoveTextField(index)}
+                        variant="contained"
+                        color="secondary"
+                        style={{
+                          height: "100%",
+                          margin: "0px 0px 0px 10px",
+                          maxHeight: index == 0 ? "40px" : null,
+                        }}
+                      >
+                        -
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              ) : (
-                <Button
-                  id="incroButton"
-                  onClick={() => handleRemoveTextField(index)}
-                  variant="contained"
-                  color="secondary"
+                <div
                   style={{
-                    height: "100%",
-                    margin: "0px 0px 0px 10px",
-                    maxHeight: index == 0 ? "40px" : null,
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    marginTop: "10px",
                   }}
                 >
-                  -
-                </Button>
-              )}
-            </div>
+                  {initListInfo.listQuantity && (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flex:
+                          index !== initListInfo.listItems.length - 1
+                            ? 1
+                            : props.mobile
+                            ? 1.5
+                            : 1,
+                        margin: "0px 10px 0px 0px",
+                      }}
+                    >
+                      <TextField
+                        focused={darkMode && true}
+                        id={darkMode ? "filled-basic" : "outlined-basic"}
+                        color="secondary"
+                        label="#"
+                        size="small"
+                        InputProps={{
+                          inputProps: {
+                            inputMode: "numeric",
+                            pattern: "[0-9]*",
+                          },
+                        }}
+                        value={object.quantity}
+                        onChange={(e) =>
+                          handleListItemChange(
+                            index,
+                            "quantity",
+                            e.target.value
+                          )
+                        }
+                        sx={{
+                          marginTop: index == 0 && props.veryMobile !== true ? "16px" : null,
+                        }}
+                      />
+                    </div>
+                  )}
+                  {initListInfo.listUnits && (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flex:
+                          index !== initListInfo.listItems.length - 1
+                            ? 2
+                            : props.mobile
+                            ? 2.5
+                            : 2,
+                        margin: "0px",
+                      }}
+                    >
+                      <FormControl
+                        size="small"
+                        sx={{
+                          marginTop: index == 0 && props.veryMobile !== true ? "16px" : null,
+                        }}
+                      >
+                        <InputLabel id="unitId">Unit</InputLabel>
+                        <Select
+                          labelId="unitId"
+                          id="unitId"
+                          label="Age"
+                          value={object.units}
+                          onChange={(e) =>
+                            handleListItemChange(index, "units", e.target.value)
+                          }
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <ListSubheader>Weight</ListSubheader>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Ounces" : "Ounce"}
+                          >
+                            {object.quantity > 1 ? "Ounces" : "Ounce"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Pounds" : "Pound"}
+                          >
+                            {object.quantity > 1 ? "Pounds" : "Pound"}
+                          </MenuItem>
+                          <ListSubheader>Volume</ListSubheader>
+                          <MenuItem value={"Fl Oz"}>Fl Oz</MenuItem>
+                          <MenuItem
+                            value={
+                              object.quantity > 1 ? "Teaspoons" : "Teaspoon"
+                            }
+                          >
+                            {object.quantity > 1 ? "Teaspoons" : "Teaspoon"}
+                          </MenuItem>
+                          <MenuItem
+                            value={
+                              object.quantity > 1 ? "Tablespoons" : "Tablespoon"
+                            }
+                          >
+                            {object.quantity > 1 ? "Tablespoons" : "Tablespoon"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Pints" : "Pint"}
+                          >
+                            {object.quantity > 1 ? "Pints" : "Pint"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Quarts" : "Quart"}
+                          >
+                            {object.quantity > 1 ? "Quarts" : "Quart"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Gallons" : "Gallon"}
+                          >
+                            {object.quantity > 1 ? "Gallons" : "Gallon"}
+                          </MenuItem>
+                          <ListSubheader>Distance</ListSubheader>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Inchs" : "Inch"}
+                          >
+                            {object.quantity > 1 ? "Inchs" : "Inch"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Feets" : "Feet"}
+                          >
+                            {object.quantity > 1 ? "Feets" : "Feet"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Yards" : "Yard"}
+                          >
+                            {object.quantity > 1 ? "Yards" : "Yard"}
+                          </MenuItem>
+                          <ListSubheader>In a store</ListSubheader>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Bags" : "Bag"}
+                          >
+                            {object.quantity > 1 ? "Bags" : "Bag"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Cans" : "Can"}
+                          >
+                            {object.quantity > 1 ? "Cans" : "Can"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Jars" : "Jar"}
+                          >
+                            {object.quantity > 1 ? "Jars" : "Jar"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Loaves" : "Loaf"}
+                          >
+                            {object.quantity > 1 ? "Loaves" : "Loaf"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Bottles" : "Bottle"}
+                          >
+                            {object.quantity > 1 ? "Bottles" : "Bottle"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Bunches" : "Bunch"}
+                          >
+                            {object.quantity > 1 ? "Bunches" : "Bunch"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Cartons" : "Carton"}
+                          >
+                            {object.quantity > 1 ? "Cartons" : "Carton"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Boxes" : "Box"}
+                          >
+                            {object.quantity > 1 ? "Boxes" : "Box"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Bundles" : "Bundle"}
+                          >
+                            {object.quantity > 1 ? "Bundles" : "Bundle"}
+                          </MenuItem>
+                          <MenuItem
+                            value={object.quantity > 1 ? "Bars" : "Bar"}
+                          >
+                            {object.quantity > 1 ? "Bars" : "Bar"}
+                          </MenuItem>
+                          <ListSubheader>Ambiguous</ListSubheader>
+                          <MenuItem value={"Small"}>Small</MenuItem>
+                          <MenuItem value={"Medium"}>Medium</MenuItem>
+                          <MenuItem value={"Large"}>Large</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                {initListInfo.listQuantity && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      flex:
+                        index !== initListInfo.listItems.length - 1
+                          ? 1
+                          : props.mobile
+                          ? 1.5
+                          : 1,
+                      margin: "0px 10px 0px 0px",
+                    }}
+                  >
+                    <TextField
+                      focused={darkMode && true}
+                      id={darkMode ? "filled-basic" : "outlined-basic"}
+                      color="secondary"
+                      label="#"
+                      size="small"
+                      InputProps={{
+                        inputProps: { inputMode: "numeric", pattern: "[0-9]*" },
+                      }}
+                      value={object.quantity}
+                      onChange={(e) =>
+                        handleListItemChange(index, "quantity", e.target.value)
+                      }
+                      sx={{
+                        marginTop: index == 0 ? "16px" : null,
+                      }}
+                    />
+                  </div>
+                )}
+                {initListInfo.listUnits && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      flex:
+                        index !== initListInfo.listItems.length - 1
+                          ? 2
+                          : props.mobile
+                          ? 2.5
+                          : 2,
+                      margin: "0px 10px 0px 0px",
+                    }}
+                  >
+                    <FormControl
+                      size="small"
+                      sx={{
+                        marginTop: index == 0 ? "16px" : null,
+                      }}
+                    >
+                      <InputLabel id="unitId">Unit</InputLabel>
+                      <Select
+                        labelId="unitId"
+                        id="unitId"
+                        label="Age"
+                        value={object.units}
+                        onChange={(e) =>
+                          handleListItemChange(index, "units", e.target.value)
+                        }
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <ListSubheader>Weight</ListSubheader>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Ounces" : "Ounce"}
+                        >
+                          {object.quantity > 1 ? "Ounces" : "Ounce"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Pounds" : "Pound"}
+                        >
+                          {object.quantity > 1 ? "Pounds" : "Pound"}
+                        </MenuItem>
+                        <ListSubheader>Volume</ListSubheader>
+                        <MenuItem value={"Fl Oz"}>Fl Oz</MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Teaspoons" : "Teaspoon"}
+                        >
+                          {object.quantity > 1 ? "Teaspoons" : "Teaspoon"}
+                        </MenuItem>
+                        <MenuItem
+                          value={
+                            object.quantity > 1 ? "Tablespoons" : "Tablespoon"
+                          }
+                        >
+                          {object.quantity > 1 ? "Tablespoons" : "Tablespoon"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Pints" : "Pint"}
+                        >
+                          {object.quantity > 1 ? "Pints" : "Pint"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Quarts" : "Quart"}
+                        >
+                          {object.quantity > 1 ? "Quarts" : "Quart"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Gallons" : "Gallon"}
+                        >
+                          {object.quantity > 1 ? "Gallons" : "Gallon"}
+                        </MenuItem>
+                        <ListSubheader>Distance</ListSubheader>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Inchs" : "Inch"}
+                        >
+                          {object.quantity > 1 ? "Inchs" : "Inch"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Feets" : "Feet"}
+                        >
+                          {object.quantity > 1 ? "Feets" : "Feet"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Yards" : "Yard"}
+                        >
+                          {object.quantity > 1 ? "Yards" : "Yard"}
+                        </MenuItem>
+                        <ListSubheader>In a store</ListSubheader>
+                        <MenuItem value={object.quantity > 1 ? "Bags" : "Bag"}>
+                          {object.quantity > 1 ? "Bags" : "Bag"}
+                        </MenuItem>
+                        <MenuItem value={object.quantity > 1 ? "Cans" : "Can"}>
+                          {object.quantity > 1 ? "Cans" : "Can"}
+                        </MenuItem>
+                        <MenuItem value={object.quantity > 1 ? "Jars" : "Jar"}>
+                          {object.quantity > 1 ? "Jars" : "Jar"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Loaves" : "Loaf"}
+                        >
+                          {object.quantity > 1 ? "Loaves" : "Loaf"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Bottles" : "Bottle"}
+                        >
+                          {object.quantity > 1 ? "Bottles" : "Bottle"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Bunches" : "Bunch"}
+                        >
+                          {object.quantity > 1 ? "Bunches" : "Bunch"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Cartons" : "Carton"}
+                        >
+                          {object.quantity > 1 ? "Cartons" : "Carton"}
+                        </MenuItem>
+                        <MenuItem value={object.quantity > 1 ? "Boxes" : "Box"}>
+                          {object.quantity > 1 ? "Boxes" : "Box"}
+                        </MenuItem>
+                        <MenuItem
+                          value={object.quantity > 1 ? "Bundles" : "Bundle"}
+                        >
+                          {object.quantity > 1 ? "Bundles" : "Bundle"}
+                        </MenuItem>
+                        <MenuItem value={object.quantity > 1 ? "Bars" : "Bar"}>
+                          {object.quantity > 1 ? "Bars" : "Bar"}
+                        </MenuItem>
+                        <ListSubheader>Ambiguous</ListSubheader>
+                        <MenuItem value={"Small"}>Small</MenuItem>
+                        <MenuItem value={"Medium"}>Medium</MenuItem>
+                        <MenuItem value={"Large"}>Large</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                )}
+                <div
+                  style={{ display: "flex", flexDirection: "column", flex: 5 }}
+                >
+                  <TextField
+                    focused={darkMode && true}
+                    id={darkMode ? "filled-basic" : "outlined-basic"}
+                    color="secondary"
+                    label={`Item #` + (index + 1)}
+                    size="small"
+                    value={object.value}
+                    onChange={(e) =>
+                      handleListItemChange(index, "value", e.target.value)
+                    }
+                    error={
+                      listSaveError == "All items in the list must have a value"
+                    }
+                    sx={{
+                      width: "100%",
+                      marginTop: index == 0 ? "16px" : null,
+                    }}
+                  />
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flex: 1,
+                    margin: index === 0 ? "15px 0px 0px 0px" : "0px",
+                  }}
+                >
+                  {index === initListInfo.listItems.length - 1 ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        height: "40px",
+                      }}
+                    >
+                      <Button
+                        id="incroButton"
+                        onClick={() => handleRemoveTextField(index)}
+                        variant="contained"
+                        color="secondary"
+                        style={{
+                          padding: props.mobile ? "5px" : null,
+                          height: "100%",
+                          margin: "0px 0px 0px 10px",
+                          maxHeight: index == 0 ? "40px" : null,
+                          display: index == 0 && "none",
+                        }}
+                      >
+                        -
+                      </Button>
+                      <Button
+                        id="incroButton"
+                        onClick={handleAddTextField}
+                        variant="contained"
+                        color="primary"
+                        style={{
+                          padding: props.mobile ? "5px" : null,
+                          height: "100%",
+                          margin: "0px 0px 0px 10px",
+                          maxHeight: index == 0 ? "40px" : null,
+                          width: index == 0 ? "100%" : null,
+                        }}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      id="incroButton"
+                      onClick={() => handleRemoveTextField(index)}
+                      variant="contained"
+                      color="secondary"
+                      style={{
+                        height: "100%",
+                        margin: "0px 0px 0px 10px",
+                        maxHeight: index == 0 ? "40px" : null,
+                      }}
+                    >
+                      -
+                    </Button>
+                  )}
+                </div>
+              </>
+            )}
           </div>
           {initListInfo.listImage ||
           initListInfo.listDueDate ||

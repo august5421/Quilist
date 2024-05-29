@@ -23,6 +23,7 @@ import { db } from "./firebaseConfig";
 
 function App() {
   const dispatch = useDispatch();
+  const veryMobile = useMediaQuery("(max-width:500px)");
   const mobile = useMediaQuery("(max-width:900px)");
   const mobileHeightRefactor = useMediaQuery("(max-height:800px)");
   const screenState = useSelector((state) => state.screenState);
@@ -98,7 +99,7 @@ function App() {
         <LoginScreen theme={theme} mobile={mobile} />
         <CreateAccountScreen theme={theme} mobile={mobile} />
         <NavScreen theme={theme} mobile={mobile} />
-        <DashboardScreen theme={theme} mobile={mobile} />
+        <DashboardScreen theme={theme} mobile={mobile} veryMobile={veryMobile}/>
         <SettingsScreen theme={theme} mobile={mobile} />
       </div>
     </ThemeProvider>

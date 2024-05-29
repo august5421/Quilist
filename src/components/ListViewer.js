@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Tabs, Tab, Box, Button, Typography } from "@mui/material";
+import React from "react";
+import { Button, Typography } from "@mui/material";
 import { db, storage } from "../firebaseConfig";
 import {
   setInitListTopInfo,
@@ -10,6 +10,7 @@ import {
 } from "../actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import AutoIncrementor from "./AutoIncrementor";
+import Tooltip from '@mui/material/Tooltip';
 
 function ListViewer(props) {
   const dispatch = useDispatch();
@@ -97,18 +98,24 @@ function ListViewer(props) {
           ? initListInfo.listName + " " + "Items"
           : "New List Items"}
       </Typography>
-      <AutoIncrementor mobile={props.mobile} />
-      <Button
-        variant="contained"
-        style={{
-          backgroundColor: theme.primary,
-          margin: "15px 0px",
-          width: "100%",
-        }}
-        onClick={handleSaveList}
-      >
-        Save List
-      </Button>
+      <AutoIncrementor mobile={props.mobile} veryMobile={props.veryMobile} />
+      <Tooltip title={screenState === 'init-Dashboard' ? "Login to save a list" : ""}>
+        <span>
+          <Button
+            variant="contained"
+            disabled={screenState === 'init-Dashboard'}
+            style={{
+              backgroundColor: screenState === 'init-Dashboard' ? '#e5e5e5' : theme.primary,
+              margin: "15px 0px",
+              width: "100%",
+              cursor: screenState === 'init-Dashboard' ? 'not-allowed' : 'pointer'
+            }}
+            onClick={handleSaveList}
+          >
+            Save List
+          </Button>
+        </span>
+      </Tooltip>
     </div>
   );
 }

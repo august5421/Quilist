@@ -37,7 +37,7 @@ function DashboardScreen(props) {
     >
       <Slide
         direction="up"
-        in={screenState === "Dashboard"}
+        in={screenState === "Dashboard" || screenState == "init-Dashboard"}
         mountOnEnter
         unmountOnExit
       >
@@ -79,7 +79,8 @@ function DashboardScreen(props) {
                     "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
                   overflowAnchor: "none",
                   borderRadius: 0,
-                  backgroundColor: darkMode ? theme.dark : theme.lighter,
+                  backgroundColor: screenState === 'init-Dashboard' ? '#e5e5e5' : (darkMode ? theme.dark : theme.lighter),
+                  cursor: screenState === 'init-Dashboard' && 'not-allowed',
                   minHeight: "calc(40vh - 98px)",
                   height: "100%",
                 }}
@@ -119,7 +120,8 @@ function DashboardScreen(props) {
                     "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
                   overflowAnchor: "none",
                   borderRadius: 0,
-                  backgroundColor: darkMode ? theme.dark : theme.lighter,
+                  backgroundColor: screenState === 'init-Dashboard' ? '#e5e5e5' : (darkMode ? theme.dark : theme.lighter),
+                  cursor: screenState === 'init-Dashboard' && 'not-allowed',
                   minHeight: "calc(40vh - 98px)",
                 }}
               >
@@ -198,7 +200,7 @@ function DashboardScreen(props) {
                       minHeight: "calc(60vh - 98px)",
                     }}
                   >
-                    <ListViewer mobile={props.mobile} />
+                    <ListViewer mobile={props.mobile} veryMobile={props.veryMobile} />
                   </Box>
                 </div>
               </div>
@@ -229,7 +231,8 @@ function DashboardScreen(props) {
                     "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
                   overflowAnchor: "none",
                   borderRadius: 0,
-                  backgroundColor: darkMode ? theme.dark : theme.lighter,
+                  backgroundColor: screenState === 'init-Dashboard' ? '#e5e5e5' : (darkMode ? theme.dark : theme.lighter),
+                  cursor: screenState === 'init-Dashboard' && 'not-allowed',
                   minHeight: "calc(60vh - 98px)",
                 }}
               >

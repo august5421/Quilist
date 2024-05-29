@@ -13,6 +13,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import LogoFont from "../components/LogoFont";
+import Button from '@mui/material/Button';
 import {
   setScreenState,
   setActiveUser,
@@ -20,6 +21,7 @@ import {
   setShowAvatarEditor,
   resetListInfo,
   setRelativeListRole,
+  setUserFriends,
 } from "../actions/actions";
 import Cookies from "js-cookie";
 
@@ -46,12 +48,18 @@ export default function NavScreen() {
       }, 500);
     }
   };
-
+  const handleLogin = () => {
+    dispatch(setScreenState(null));
+    setTimeout(() => {
+      dispatch(setScreenState('LogIn'));
+    }, 500);
+  }
   const handleLogout = () => {
     setAnchorEl(null);
     dispatch(setScreenState(null));
     dispatch(setShowAvatarEditor(false));
     dispatch(setRelativeListRole(null));
+    dispatch(setUserFriends([]));
     dispatch(resetListInfo());
     dispatch(
       setActiveUser({
@@ -94,6 +102,14 @@ export default function NavScreen() {
           margin: "0px 10px",
         }}
       >
+        {screenState === "init-Dashboard" && (
+          <>
+            <div>
+              <LogoFont text="Quilist" color={theme.light} fontSize="30px" />
+            </div>
+            
+          </>
+        )}
         <Grow
           in={
             screenState !== "LogIn" &&
@@ -129,8 +145,14 @@ export default function NavScreen() {
               </IconButton>
             </div>
           </Grow>
+          {screenState === "init-Dashboard" && (
+            <Button variant="contained" color="secondary" onClick={handleLogin}>
+              Login
+            </Button>
+          )}
         </div>
       </Box>
+      
       <Menu
         id="account-menu"
         anchorEl={anchorEl}
@@ -185,6 +207,7 @@ export default function NavScreen() {
           Logout
         </MenuItem>
       </Menu>
+      
     </Box>
   );
 }

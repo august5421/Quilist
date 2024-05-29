@@ -48,6 +48,13 @@ function LoginScreen(props) {
       });
     }, 500);
   };
+  
+  const handleTryIt = () => {
+    dispatch(setScreenState(null));
+    setTimeout(() => {
+      dispatch(setScreenState("init-Dashboard"));
+    }, 500)
+  }
 
   const handleLogin = () => {
     const { email, password } = formData;
@@ -65,7 +72,7 @@ function LoginScreen(props) {
     }));
     if (Object.keys(errors).length === 0) {
       db.collection("Users")
-        .where("email", "==", email)
+        .where("email", "==", email.toLowerCase())
         .get()
         .then((querySnapshot) => {
           if (querySnapshot.empty) {
@@ -89,7 +96,7 @@ function LoginScreen(props) {
                     setActiveUser({
                       firstName: userData.firstName,
                       lastName: userData.lastName,
-                      email: userData.email,
+                      email: userData.email.toLowerCase(),
                       avatar: userData.avatar,
                       docId: userData.docId,
                       theme: userData.theme,
@@ -211,14 +218,26 @@ function LoginScreen(props) {
               </Alert>
             </Fade>
           ) : null}
-
-          <Button
-            variant="contained"
-            style={{ backgroundColor: theme.primary, margin: "15px 0px" }}
-            onClick={handleLogin}
-          >
-            Log In
-          </Button>
+          <div style={{display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
+            <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: theme.grey, margin: "15px 7.5px 0px 0px" }}
+                onClick={handleTryIt}
+              >
+                Try It
+              </Button>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: theme.primary, margin: "15px 0px 0px 7.5px" }}
+                onClick={handleLogin}
+              >
+                Log In
+              </Button>
+            </div>
+          </div>
           <div style={{ color: theme.primary, textAlign: "center" }}>
             <Button variant="text" onClick={handleCreateAccountClick}>
               Create An Account

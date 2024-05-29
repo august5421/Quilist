@@ -38,6 +38,7 @@ const MyLists = (props) => {
   const succeffListSave = useSelector((state) => state.succeffListSave);
   const darkMode = useSelector((state) => state.darkMode);
   const editingListId = useSelector((state) => state.editingListId);
+  const screenState = useSelector((state) => state.screenState);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [listToDelete, setListToDelete] = useState(null);
   const [showViewer, setShowViewer] = useState(false);
@@ -294,7 +295,12 @@ const MyLists = (props) => {
             height: "90%",
           }}
         >
-          You do not have any lists saved
+          {screenState === "init-Dashboard" ? (
+            <>Login to an account to save lists here</>
+          ) : (
+            <>You do not have any lists saved</>
+          )}
+          
         </div>
       )}
       <Dialog

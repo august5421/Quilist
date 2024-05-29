@@ -1,5 +1,5 @@
 const initialState = {
-  screenState: "LogIn",
+  screenState: "init-Dashboard",
   darkMode: false,
   theme: {
     primary: "#19535F",

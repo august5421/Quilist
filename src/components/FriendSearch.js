@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setActiveUser,
   setChangePassword,
+  setScreenState,
   setSearchResults,
   setUserFriends,
 } from "../actions/actions";
@@ -29,8 +30,9 @@ const FriendSearch = (props) => {
   const searchResults = useSelector((state) => state.searchResults);
   const activeUser = useSelector((state) => state.activeUser);
   const userFriends = useSelector((state) => state.userFriends);
+  const screenState = useSelector((state) => state.screenState);
   const [searchCriteria, setSearchCriteria] = useState("");
-
+  
   const handleSearchInputChange = (event) => {
     setSearchCriteria(event.target.value);
   };
@@ -128,6 +130,7 @@ const FriendSearch = (props) => {
     <div>
       <TextField
         label="Search For Friends"
+        disabled={screenState == 'init-Dashboard'}
         focused={darkMode && true}
         id={darkMode ? "filled-basic" : "outlined-basic"}
         color="secondary"
